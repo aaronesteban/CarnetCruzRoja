@@ -11,7 +11,7 @@ public class Main {
         int size = leer.nextInt();
         CarnetCruzRoja carnet [] = new CarnetCruzRoja[size];
         carnet = addCarnet(size, carnet);
-        
+        printCarnet(size, carnet);
     }
 
     public static CarnetCruzRoja[] addCarnet(int size, CarnetCruzRoja carnet[]){
@@ -39,6 +39,17 @@ public class Main {
         return carnet;
     }
 
+    public static void printCarnet(int size, CarnetCruzRoja carnet[]){
+        for (int i=0; i<size; ++i){
+            System.out.println(carnet[i].getNombre());
+            System.out.println(carnet[i].getApellidos());
+            System.out.println(carnet[i].getDni());
+            System.out.println(carnet[i].getLocalidad());
+            System.out.println(carnet[i].getProvincia());
+            System.out.println(carnet[i].getServicio());
+            System.out.println(carnet[i].getFecha());
 
+        }
+    }
 
 }
