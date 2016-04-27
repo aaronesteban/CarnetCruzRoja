@@ -68,4 +68,5 @@ public class CarnetCruzRoja {
     public String getFecha() {
         return fecha;
     }
+
 }
