@@ -69,4 +69,12 @@ public class CarnetCruzRoja {
         return fecha;
     }
 
+    @Override
+    public String toString() {
+        String carnet ="\nNombre: "+nombre + "\nApellidos: " + apellidos + "\nD.N.I: " + dni +
+                "\nProvincia: " + provincia + "\nLocalidad: " + localidad + "\nServicio: " + servicio +
+                "\nFecha: " + fecha;
+
+        return carnet;
+    }
 }
