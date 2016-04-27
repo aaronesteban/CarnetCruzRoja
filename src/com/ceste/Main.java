@@ -1,5 +1,6 @@
 package com.ceste;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -9,14 +10,21 @@ public class Main {
 
         System.out.println("Introduce cuantos carnet quieres añadir:");
         int size = leer.nextInt();
+
+        //Objects to Array
         CarnetCruzRoja carnet [] = new CarnetCruzRoja[size];
-        carnet = addCarnet(size, carnet);
-        printCarnet(size, carnet);
+        carnet = addCarnet(carnet);
+        printCarnet(carnet);
+
+        //Objects to ArrayList
+        ArrayList<CarnetCruzRoja> carnetList = new ArrayList<CarnetCruzRoja>();
+        carnetList = copyCarnet(carnet, carnetList);
+        printCarnetList(carnetList);
     }
 
-    public static CarnetCruzRoja[] addCarnet(int size, CarnetCruzRoja carnet[]){
+    public static CarnetCruzRoja[] addCarnet(CarnetCruzRoja carnet[]){
 
-        for(int i=0; i<size; ++i){
+        for(int i=0; i<carnet.length; ++i){
             carnet[i] = new CarnetCruzRoja();
             leer.nextLine();
             System.out.println("\nIntroduce el nombre:");
@@ -39,10 +47,23 @@ public class Main {
         return carnet;
     }
 
-    public static void printCarnet(int size, CarnetCruzRoja carnet[]){
-        for (int i=0; i<size; ++i){
+    public static void printCarnet(CarnetCruzRoja carnet[]){
+        for (int i=0; i<carnet.length; ++i){
             System.out.println(carnet[i].toString());
 
+        }
+    }
+
+    private static ArrayList<CarnetCruzRoja> copyCarnet(CarnetCruzRoja[] carnet, ArrayList<CarnetCruzRoja> carnetList) {
+        for (int i=0; i<carnet.length; ++i){
+            carnetList.add(carnet[i]);
+        }
+        return carnetList;
+    }
+
+    private static void printCarnetList(ArrayList<CarnetCruzRoja> carnetList) {
+        for (int i=0; i<carnetList.size(); ++i){
+            System.out.println(carnetList.get(i));
         }
     }
 
