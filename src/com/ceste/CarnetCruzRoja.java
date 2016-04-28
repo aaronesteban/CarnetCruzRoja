@@ -4,7 +4,7 @@ package com.ceste;
  * Created by Aaron on 25/4/16.
  */
 
-public class CarnetCruzRoja {
+public class CarnetCruzRoja implements Comparable{
     private String dni = "";
     private String apellidos = "";
     private String nombre = "";
@@ -67,5 +67,11 @@ public class CarnetCruzRoja {
                 "\nFecha: " + fecha;
 
         return carnet;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+
+        return 0;
     }
 }

@@ -50,7 +50,7 @@ public class Main {
     }
 
     public static void printCarnetFromArray(CarnetCruzRoja carnet[]){
-        System.out.println("\n******Imprimo el Array******");
+        System.out.println("\n****** Imprimo el Array ******");
         for (int i=0; i<carnet.length; ++i){
             System.out.println(carnet[i].toString());
         }
@@ -60,12 +60,12 @@ public class Main {
         for (int i=0; i<carnet.length; ++i){
             carnetList.add(carnet[i]);
         }
-        //carnetList.add(carnet[1]);
+        //carnetList.add(carnet[1]); Duplica el objeto dentro del ArrayList
         return carnetList;
     }
 
     private static void printCarnetFromArrayList(ArrayList<CarnetCruzRoja> carnetList) {
-        System.out.println("\n******Imprimo el ArrayList******");
+        System.out.println("\n****** Imprimo el ArrayList ******");
         for (int i=0; i<carnetList.size(); ++i){
             System.out.println(carnetList.get(i));
         }
@@ -75,12 +75,21 @@ public class Main {
         for (int i=0; i<carnet.length; ++i){
             carnetSet.add(carnet[i]);
         }
+        //carnetSet.add(carnet[1]); Remplaza el objeto dentro del HashSet
         return carnetSet;
     }
 
     private static void printCarnetFromHashSet(HashSet<CarnetCruzRoja> carnetSet) {
-        System.out.println("\n******Imprimo el HashSet******\n");
-        System.out.println(carnetSet);
+        System.out.println("\n****** Imprimo el HashSet ******");
+        for (CarnetCruzRoja item:carnetSet){
+            System.out.println(item);
+        }
+
+        /*for(Iterator<CarnetCruzRoja> iter = carnetSet.iterator(); iter.hasNext();)
+        {
+            CarnetCruzRoja element = iter.next();
+            System.out.println(element);
+        }*/
     }
 
 }
