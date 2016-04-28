@@ -1,6 +1,7 @@
 package com.ceste;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
 
 public class Main {
@@ -17,9 +18,14 @@ public class Main {
         printCarnetFromArray(carnet);
 
         //Objects to ArrayList
-        ArrayList<CarnetCruzRoja> carnetList = new ArrayList<CarnetCruzRoja>();
+        ArrayList<CarnetCruzRoja> carnetList = new ArrayList<>();
         carnetList = copyCarnetToArrayList(carnet, carnetList);
         printCarnetFromArrayList(carnetList);
+
+        //Objects to HashSet
+        HashSet<CarnetCruzRoja> carnetSet = new HashSet<>();
+        carnetSet = copyCarnetToHashSet(carnet, carnetSet);
+        printCarnetFromHashSet(carnetSet);
     }
 
     public static CarnetCruzRoja[] addCarnet(CarnetCruzRoja carnet[]){
@@ -44,6 +50,7 @@ public class Main {
     }
 
     public static void printCarnetFromArray(CarnetCruzRoja carnet[]){
+        System.out.println("\n******Imprimo el Array******");
         for (int i=0; i<carnet.length; ++i){
             System.out.println(carnet[i].toString());
         }
@@ -58,11 +65,22 @@ public class Main {
     }
 
     private static void printCarnetFromArrayList(ArrayList<CarnetCruzRoja> carnetList) {
+        System.out.println("\n******Imprimo el ArrayList******");
         for (int i=0; i<carnetList.size(); ++i){
             System.out.println(carnetList.get(i));
         }
+    }
 
+    private static HashSet<CarnetCruzRoja> copyCarnetToHashSet(CarnetCruzRoja[] carnet, HashSet<CarnetCruzRoja> carnetSet) {
+        for (int i=0; i<carnet.length; ++i){
+            carnetSet.add(carnet[i]);
+        }
+        return carnetSet;
+    }
 
+    private static void printCarnetFromHashSet(HashSet<CarnetCruzRoja> carnetSet) {
+        System.out.println("\n******Imprimo el HashSet******\n");
+        System.out.println(carnetSet);
     }
 
 }
