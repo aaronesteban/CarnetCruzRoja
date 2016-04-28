@@ -13,8 +13,11 @@ public class CarnetCruzRoja {
     private String servicio = "";
     private String fecha = "";
 
-    //GETTERS
+    public CarnetCruzRoja(String dni) {
+        this.dni = dni;
+    }
 
+    //GETTERS
     public String getDni() {
         return dni;
     }
@@ -38,10 +41,6 @@ public class CarnetCruzRoja {
     }
 
     //SETTERS
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
