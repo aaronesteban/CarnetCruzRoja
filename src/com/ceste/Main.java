@@ -28,9 +28,30 @@ public class Main {
         carnetSet = copyCarnetToHashSet(carnet, carnetSet);
         printCarnetFromHashSet(carnetSet);
 
+        //CompareTo
+        carnet=comparaApellido(carnet);
+        printCarnetFromArray(carnet);
+
+        //Compare
+        
+
         //Guardar carnets
         ExportaCarnets2CSV exportaCarnets2CVS = new ExportaCarnets2CSV(carnetList, "/Users/Aaron/Desktop/objetos.txt");
         exportaCarnets2CVS.guardarDatos();
+    }
+
+    private static CarnetCruzRoja[] comparaApellido(CarnetCruzRoja[] carnet) {
+        for (int i=0; i< carnet.length; ++i){
+            for (int j=i+1; j< carnet.length; ++j){
+                if (carnet[i].compareTo(carnet[j]) >0){
+                    CarnetCruzRoja auxiliar;
+                    auxiliar = carnet[i];
+                    carnet[i] = carnet [j];
+                    carnet [j] = auxiliar;
+                }
+            }
+        }
+        return carnet;
     }
 
     public static CarnetCruzRoja[] addCarnet(CarnetCruzRoja carnet[]){

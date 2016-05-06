@@ -74,6 +74,12 @@ public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Comparator<Ca
 
     @Override
     public int compareTo(CarnetCruzRoja o) {
+        if (getApellidos().compareTo(o.getApellidos()) < 0) return -1;
+        else if (getApellidos().compareTo(o.getApellidos()) > 0) return 1;
+        else {
+            if (getNombre().compareTo(o.getNombre()) < 0) return -1;
+            else if (getNombre().compareTo(o.getNombre()) > 0) return 1;
+        }
         return 0;
     }
 
