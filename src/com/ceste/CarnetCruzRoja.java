@@ -1,10 +1,12 @@
 package com.ceste;
 
+import java.util.Comparator;
+
 /**
  * Created by Aaron on 25/4/16.
  */
 
-public class CarnetCruzRoja implements Comparable{
+public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Comparator<CarnetCruzRoja> {
     private String dni = "";
     private String apellidos = "";
     private String nombre = "";
@@ -62,16 +64,21 @@ public class CarnetCruzRoja implements Comparable{
 
     @Override
     public String toString() {
-        String carnet ="\nNombre: "+nombre + "\nApellidos: " + apellidos + "\nD.N.I: " + dni +
+        /*String carnet ="\nNombre: "+nombre + "\nApellidos: " + apellidos + "\nD.N.I: " + dni +
                 "\nProvincia: " + provincia + "\nLocalidad: " + localidad + "\nServicio: " + servicio +
-                "\nFecha: " + fecha;
-
+                "\nFecha: " + fecha;*/
+        String carnet =nombre + "\t" + apellidos + "\t" + dni + "\t" + provincia + "\t" + localidad + "\t"
+                + servicio + "\t" + fecha;
         return carnet;
     }
 
     @Override
-    public int compareTo(Object o) {
+    public int compareTo(CarnetCruzRoja o) {
+        return 0;
+    }
 
+    @Override
+    public int compare(CarnetCruzRoja o1, CarnetCruzRoja o2) {
         return 0;
     }
 }

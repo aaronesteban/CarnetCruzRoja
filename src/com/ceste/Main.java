@@ -1,5 +1,6 @@
 package com.ceste;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -8,7 +9,7 @@ public class Main {
 
     static Scanner leer = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         System.out.println("Introduce cuantos carnet quieres añadir:");
         int size = leer.nextInt();
 
@@ -26,6 +27,10 @@ public class Main {
         HashSet<CarnetCruzRoja> carnetSet = new HashSet<>();
         carnetSet = copyCarnetToHashSet(carnet, carnetSet);
         printCarnetFromHashSet(carnetSet);
+
+        //Guardar carnets
+        ExportaCarnets2CSV exportaCarnets2CVS = new ExportaCarnets2CSV(carnetList, "/Users/Aaron/Desktop/objetos.txt");
+        exportaCarnets2CVS.guardarDatos();
     }
 
     public static CarnetCruzRoja[] addCarnet(CarnetCruzRoja carnet[]){
