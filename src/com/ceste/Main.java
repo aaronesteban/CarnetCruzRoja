@@ -33,10 +33,10 @@ public class Main {
         printCarnetFromArray(carnet);
 
         //Compare
-        
+
 
         //Guardar carnets
-        ExportaCarnets2CSV exportaCarnets2CVS = new ExportaCarnets2CSV(carnetList, "/Users/Aaron/Desktop/objetos.txt");
+        ExportaCarnets2CSV exportaCarnets2CVS = new ExportaCarnets2CSV(carnetList, "/Users/Aaron/Desktop/objetos.csv");
         exportaCarnets2CVS.guardarDatos();
     }
 
@@ -56,9 +56,9 @@ public class Main {
 
     public static CarnetCruzRoja[] addCarnet(CarnetCruzRoja carnet[]){
         for(int i=0; i<carnet.length; ++i){
+            leer.nextLine();
             System.out.println("\nIntroduce el D.N.I:");
             carnet[i] = new CarnetCruzRoja(leer.nextLine());
-            leer.nextLine();
             System.out.println("\nIntroduce el nombre:");
             carnet[i].setNombre(leer.nextLine());
             System.out.println("\nIntroduce los apellidos:");

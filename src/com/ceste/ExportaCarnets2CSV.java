@@ -22,7 +22,7 @@ public class ExportaCarnets2CSV {
     }
 
     public void guardarDatos() throws IOException {
-        FileWriter escritor = new FileWriter(nombreFichero);
+        FileWriter escritor = new FileWriter(nombreFichero, true);
         BufferedWriter escritorConBuffer= new BufferedWriter(escritor);
         for (int i=0; i<carnets.size(); ++i){
             String carnetEnString = carnets.get(i).toString();
