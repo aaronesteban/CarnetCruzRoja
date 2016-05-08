@@ -86,7 +86,7 @@ public class Main {
             carnet[i].setLocalidad(leer.nextLine());
             System.out.println("\nIntroduce el servicio:");
             carnet[i].setServicio(leer.nextLine());
-            System.out.println("\nIntroduce la fecha:");
+            System.out.println("\nIntroduce la fecha (d-m-y):");
             carnet[i].setFecha(leer.nextLine());
         }
         return carnet;

@@ -1,19 +1,22 @@
 package com.ceste;
 
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+
 import java.util.Comparator;
 
 /**
  * Created by Aaron on 25/4/16.
  */
 
-public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Comparator<CarnetCruzRoja> {
+public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Comparator<CarnetCruzRoja>{
     private String dni = "";
     private String apellidos = "";
     private String nombre = "";
     private String provincia = "";
     private String localidad = "";
     private String servicio = "";
-    private String fecha = "";
+    private LocalDate date;
 
     public CarnetCruzRoja(String dni) {
         this.dni = dni;
@@ -38,8 +41,8 @@ public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Comparator<Ca
     public String getServicio() {
         return servicio;
     }
-    public String getFecha() {
-        return fecha;
+    public LocalDate getFecha() {
+        return date;
     }
 
     //SETTERS
@@ -59,16 +62,14 @@ public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Comparator<Ca
         this.servicio = servicio;
     }
     public void setFecha(String fecha) {
-        this.fecha = fecha;
+        this.date = LocalDate.parse(fecha,
+                DateTimeFormat.forPattern("dd-MM-yyyy"));
     }
 
     @Override
     public String toString() {
-        /*String carnet ="\nNombre: "+nombre + "\nApellidos: " + apellidos + "\nD.N.I: " + dni +
-                "\nProvincia: " + provincia + "\nLocalidad: " + localidad + "\nServicio: " + servicio +
-                "\nFecha: " + fecha;*/
         String carnet =nombre + "\t" + apellidos + "\t" + dni + "\t" + provincia + "\t" + localidad + "\t"
-                + servicio + "\t" + fecha;
+                + servicio + "\t" + date.toString("dd-MM-yyyy");
         return carnet;
     }
 
@@ -87,4 +88,5 @@ public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Comparator<Ca
     public int compare(CarnetCruzRoja o1, CarnetCruzRoja o2) {
         return o1.getDni().compareTo(o2.getDni());
     }
+
 }
