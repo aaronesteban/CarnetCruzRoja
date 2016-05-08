@@ -28,14 +28,19 @@ public class Main {
         carnetSet = copyCarnetToHashSet(carnet, carnetSet);
         printCarnetFromHashSet(carnetSet);
 
-        //CompareTo
+        //CompareTo Apellidos
         System.out.println("\nImprimo carnets ordenados por apellido");
-        carnet=comparaApellido(carnet);
+        carnet=compara(carnet, "apellido");
         printCarnetFromArray(carnet);
 
-        //Compare
+        //Compare Dni
         System.out.println("\nImprimo carnets ordenados por DNI");
-        carnet=comparaDni(carnet);
+        carnet=compara(carnet, "dni");
+        printCarnetFromArray(carnet);
+
+        //Compare Date
+        System.out.println("\nImprimo carnets ordenados por Fecha");
+        carnet=compara(carnet, "fecha");
         printCarnetFromArray(carnet);
 
         //Guardar carnets
@@ -43,24 +48,22 @@ public class Main {
         exportaCarnets2CVS.guardarDatos();
     }
 
-    private static CarnetCruzRoja[] comparaDni(CarnetCruzRoja[] carnet) {
+    private static CarnetCruzRoja[] compara(CarnetCruzRoja[] carnet, String opcion) {
         for (int i=0; i< carnet.length; ++i){
             for (int j=i+1; j< carnet.length; ++j){
-                if (carnet[i].compare(carnet[i], carnet[j]) >0){
+                if (opcion == "fecha" && carnet[i].compareDate(carnet[i], carnet[j]) > 0){
                     CarnetCruzRoja auxiliar;
                     auxiliar = carnet[i];
                     carnet[i] = carnet [j];
                     carnet [j] = auxiliar;
                 }
-            }
-        }
-        return carnet;
-    }
-
-    private static CarnetCruzRoja[] comparaApellido(CarnetCruzRoja[] carnet) {
-        for (int i=0; i< carnet.length; ++i){
-            for (int j=i+1; j< carnet.length; ++j){
-                if (carnet[i].compareTo(carnet[j]) >0){
+                else if (opcion == "dni" && carnet[i].compare(carnet[i], carnet[j]) >0){
+                    CarnetCruzRoja auxiliar;
+                    auxiliar = carnet[i];
+                    carnet[i] = carnet [j];
+                    carnet [j] = auxiliar;
+                }
+                else if (opcion == "apellido" && carnet[i].compareTo(carnet[j]) >0){
                     CarnetCruzRoja auxiliar;
                     auxiliar = carnet[i];
                     carnet[i] = carnet [j];
@@ -87,7 +90,12 @@ public class Main {
             System.out.println("\nIntroduce el servicio:");
             carnet[i].setServicio(leer.nextLine());
             System.out.println("\nIntroduce la fecha (d-m-y):");
-            carnet[i].setFecha(leer.nextLine());
+            try{
+                carnet[i].setFecha(leer.nextLine());
+            }catch (IllegalArgumentException e){
+                System.out.println("Error: No ha introducido la fecha en el formato correcto.");
+            }
+
         }
         return carnet;
     }

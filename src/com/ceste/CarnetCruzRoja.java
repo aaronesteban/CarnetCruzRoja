@@ -89,4 +89,7 @@ public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Comparator<Ca
         return o1.getDni().compareTo(o2.getDni());
     }
 
+    public int compareDate(CarnetCruzRoja o1, CarnetCruzRoja o2){
+        return o1.getFecha().compareTo(o2.getFecha());
+    }
 }
