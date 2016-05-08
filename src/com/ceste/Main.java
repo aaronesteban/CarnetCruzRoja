@@ -29,15 +29,32 @@ public class Main {
         printCarnetFromHashSet(carnetSet);
 
         //CompareTo
+        System.out.println("\nImprimo carnets ordenados por apellido");
         carnet=comparaApellido(carnet);
         printCarnetFromArray(carnet);
 
         //Compare
-
+        System.out.println("\nImprimo carnets ordenados por DNI");
+        carnet=comparaDni(carnet);
+        printCarnetFromArray(carnet);
 
         //Guardar carnets
         ExportaCarnets2CSV exportaCarnets2CVS = new ExportaCarnets2CSV(carnetList, "/Users/Aaron/Desktop/objetos.csv");
         exportaCarnets2CVS.guardarDatos();
+    }
+
+    private static CarnetCruzRoja[] comparaDni(CarnetCruzRoja[] carnet) {
+        for (int i=0; i< carnet.length; ++i){
+            for (int j=i+1; j< carnet.length; ++j){
+                if (carnet[i].compare(carnet[i], carnet[j]) >0){
+                    CarnetCruzRoja auxiliar;
+                    auxiliar = carnet[i];
+                    carnet[i] = carnet [j];
+                    carnet [j] = auxiliar;
+                }
+            }
+        }
+        return carnet;
     }
 
     private static CarnetCruzRoja[] comparaApellido(CarnetCruzRoja[] carnet) {

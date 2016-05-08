@@ -85,6 +85,6 @@ public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Comparator<Ca
 
     @Override
     public int compare(CarnetCruzRoja o1, CarnetCruzRoja o2) {
-        return 0;
+        return o1.getDni().compareTo(o2.getDni());
     }
 }
