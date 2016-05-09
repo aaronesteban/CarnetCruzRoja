@@ -3,13 +3,11 @@ package com.ceste;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
-import java.util.Comparator;
-
 /**
  * Created by Aaron on 25/4/16.
  */
 
-public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Comparator<CarnetCruzRoja>{
+public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>{
     private String dni = "";
     private String apellidos = "";
     private String nombre = "";
@@ -62,13 +60,13 @@ public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Comparator<Ca
         this.servicio = servicio;
     }
     public void setFecha(String fecha) {
-        this.date = DateTimeFormat.forPattern("dd-MM-yyyy").parseDateTime(fecha);
+        this.date = DateTimeFormat.forPattern("dd/MM/yyyy").parseDateTime(fecha);
     }
 
     @Override
     public String toString() {
         String carnet =nombre + "\t" + apellidos + "\t" + dni + "\t" + provincia + "\t" + localidad + "\t"
-                + servicio + "\t" + date.toString("dd-MM-yyyy");
+                + servicio + "\t" + date.toString("dd/MM/yyyy");
         return carnet;
     }
 
@@ -83,12 +81,4 @@ public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Comparator<Ca
         return 0;
     }
 
-    @Override
-    public int compare(CarnetCruzRoja o1, CarnetCruzRoja o2) {
-        return o1.getDni().compareTo(o2.getDni());
-    }
-
-    public int compareDate(CarnetCruzRoja o1, CarnetCruzRoja o2){
-        return o1.getFecha().compareTo(o2.getFecha());
-    }
 }

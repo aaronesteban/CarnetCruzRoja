@@ -21,15 +21,20 @@ public class ExportaCarnets2CSV {
         this.nombreFichero=nombreFichero;
     }
 
-    public void guardarDatos() throws IOException {
-        FileWriter escritor = new FileWriter(nombreFichero, true);
-        BufferedWriter escritorConBuffer= new BufferedWriter(escritor);
-        for (int i=0; i<carnets.size(); ++i){
-            String carnetEnString = carnets.get(i).toString();
-            escritorConBuffer.write(carnetEnString, 0, carnetEnString.length());
-            escritorConBuffer.newLine();
+    public void guardarDatos() {
+        try{
+            FileWriter escritor = new FileWriter(nombreFichero, true);
+            BufferedWriter escritorConBuffer= new BufferedWriter(escritor);
+            for (int i=0; i<carnets.size(); ++i){
+                String carnetEnString = carnets.get(i).toString();
+                escritorConBuffer.write(carnetEnString, 0, carnetEnString.length());
+                escritorConBuffer.newLine();
+            }
+            escritorConBuffer.flush();
+            escritorConBuffer.close();
+        }catch (IOException e){
+            System.out.println("Error de lectura o escritura" + e);
         }
-        escritorConBuffer.flush();
-        escritorConBuffer.close();
+
     }
 }

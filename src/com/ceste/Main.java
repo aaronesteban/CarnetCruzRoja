@@ -49,15 +49,16 @@ public class Main {
     }
 
     private static CarnetCruzRoja[] compara(CarnetCruzRoja[] carnet, String opcion) {
+        Compare comparador = new Compare();
         for (int i=0; i< carnet.length; ++i){
             for (int j=i+1; j< carnet.length; ++j){
-                if (opcion == "fecha" && carnet[i].compareDate(carnet[i], carnet[j]) > 0){
+                if (opcion == "fecha" && comparador.compare(carnet[i].getFecha(), carnet[j].getFecha()) > 0){
                     CarnetCruzRoja auxiliar;
                     auxiliar = carnet[i];
                     carnet[i] = carnet [j];
                     carnet [j] = auxiliar;
                 }
-                else if (opcion == "dni" && carnet[i].compare(carnet[i], carnet[j]) >0){
+                else if (opcion == "dni" && comparador.compare(carnet[i], carnet[j]) >0){
                     CarnetCruzRoja auxiliar;
                     auxiliar = carnet[i];
                     carnet[i] = carnet [j];
@@ -74,12 +75,20 @@ public class Main {
         return carnet;
     }
 
-    public static CarnetCruzRoja[] addCarnet(CarnetCruzRoja carnet[]){
+    public static CarnetCruzRoja[] addCarnet(CarnetCruzRoja carnet[]) {
         for(int i=0; i<carnet.length; ++i){
-            boolean opcion = true;
+            boolean opcion = false;
             leer.nextLine();
-            System.out.println("\nIntroduce el D.N.I:");
-            carnet[i] = new CarnetCruzRoja(leer.nextLine());
+            while(opcion == false){
+                System.out.println("\nIntroduce el D.N.I:");
+                carnet[i] = new CarnetCruzRoja(leer.nextLine());
+                if (carnet[i].getDni().isEmpty()){
+                    System.out.println("Error: Debe de introducir el DNI.");
+                    continue;
+                }
+                else opcion = true;
+            }
+            opcion = false;
             System.out.println("\nIntroduce el nombre:");
             carnet[i].setNombre(leer.nextLine());
             System.out.println("\nIntroduce los apellidos:");
@@ -90,11 +99,11 @@ public class Main {
             carnet[i].setLocalidad(leer.nextLine());
             System.out.println("\nIntroduce el servicio:");
             carnet[i].setServicio(leer.nextLine());
-            while(opcion == true){
-                System.out.println("\nIntroduce la fecha (d-m-y):");
+            while(opcion == false){
+                System.out.println("\nIntroduce la fecha (d/m/y):");
                 try{
                     carnet[i].setFecha(leer.nextLine());
-                    opcion = false;
+                    opcion = true;
                 }catch (IllegalArgumentException e){
                     System.out.println("Error: No ha introducido la fecha en el formato correcto.");
                     continue;
