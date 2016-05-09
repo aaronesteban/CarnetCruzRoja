@@ -75,6 +75,7 @@ public class Main {
     }
 
     public static CarnetCruzRoja[] addCarnet(CarnetCruzRoja carnet[]){
+        boolean opcion = true;
         for(int i=0; i<carnet.length; ++i){
             leer.nextLine();
             System.out.println("\nIntroduce el D.N.I:");
@@ -89,12 +90,17 @@ public class Main {
             carnet[i].setLocalidad(leer.nextLine());
             System.out.println("\nIntroduce el servicio:");
             carnet[i].setServicio(leer.nextLine());
-            System.out.println("\nIntroduce la fecha (d-m-y):");
-            try{
-                carnet[i].setFecha(leer.nextLine());
-            }catch (IllegalArgumentException e){
-                System.out.println("Error: No ha introducido la fecha en el formato correcto.");
+            while(opcion == true){
+                System.out.println("\nIntroduce la fecha (d-m-y):");
+                try{
+                    carnet[i].setFecha(leer.nextLine());
+                    opcion = false;
+                }catch (IllegalArgumentException e){
+                    System.out.println("Error: No ha introducido la fecha en el formato correcto.");
+                    continue;
+                }
             }
+
 
         }
         return carnet;
