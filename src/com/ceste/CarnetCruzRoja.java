@@ -3,11 +3,13 @@ package com.ceste;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
+import java.io.Serializable;
+
 /**
  * Created by Aaron on 25/4/16.
  */
 
-public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>{
+public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Serializable{
     private String dni = "";
     private String apellidos = "";
     private String nombre = "";

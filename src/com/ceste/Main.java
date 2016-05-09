@@ -9,7 +9,8 @@ public class Main {
 
     static Scanner leer = new Scanner(System.in);
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
+
         System.out.println("Introduce cuantos carnet quieres añadir:");
         int size = leer.nextInt();
 
@@ -19,12 +20,12 @@ public class Main {
         printCarnetFromArray(carnet);
 
         //Objects to ArrayList
-        ArrayList<CarnetCruzRoja> carnetList = new ArrayList<>();
+        ArrayList<CarnetCruzRoja> carnetList = new ArrayList<CarnetCruzRoja>();
         carnetList = copyCarnetToArrayList(carnet, carnetList);
         printCarnetFromArrayList(carnetList);
 
         //Objects to HashSet
-        HashSet<CarnetCruzRoja> carnetSet = new HashSet<>();
+        HashSet<CarnetCruzRoja> carnetSet = new HashSet<CarnetCruzRoja>();
         carnetSet = copyCarnetToHashSet(carnet, carnetSet);
         printCarnetFromHashSet(carnetSet);
 
@@ -46,6 +47,26 @@ public class Main {
         //Guardar carnets
         ExportaCarnets2CSV exportaCarnets2CVS = new ExportaCarnets2CSV(carnetList, "/Users/Aaron/Desktop/objetos.csv");
         exportaCarnets2CVS.guardarDatos();
+
+        //Serialización
+        CarnetsCruzRojaDb serialize = new CarnetsCruzRojaDb("datos.ser");
+        serialize.setCarnets(carnetList);
+        serialize.guardar();
+
+        //Deserializacion
+        try {
+            serialize.cargar();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        //Guarda carnets serializando uno a uno
+        for (int i=0; i<carnetList.size(); ++i){
+            serialize.get(i);
+        }
+
     }
 
     private static CarnetCruzRoja[] compara(CarnetCruzRoja[] carnet, String opcion) {
