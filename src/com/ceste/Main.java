@@ -45,7 +45,7 @@ public class Main {
         printCarnetFromArray(carnet);
 
         //Guardar carnets
-        ExportaCarnets2CSV exportaCarnets2CVS = new ExportaCarnets2CSV(carnetList, "/Users/Aaron/Desktop/objetos.csv");
+        ExportaCarnets2CSV exportaCarnets2CVS = new ExportaCarnets2CSV(carnetList, "objetos.csv");
         exportaCarnets2CVS.guardarDatos();
 
         //Serialización
