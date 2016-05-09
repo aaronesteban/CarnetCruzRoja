@@ -1,6 +1,6 @@
 package com.ceste;
 
-import org.joda.time.LocalDate;
+import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
 import java.util.Comparator;
@@ -16,7 +16,7 @@ public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Comparator<Ca
     private String provincia = "";
     private String localidad = "";
     private String servicio = "";
-    private LocalDate date;
+    private DateTime date;
 
     public CarnetCruzRoja(String dni) {
         this.dni = dni;
@@ -41,7 +41,7 @@ public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Comparator<Ca
     public String getServicio() {
         return servicio;
     }
-    public LocalDate getFecha() {
+    public DateTime getFecha() {
         return date;
     }
 
@@ -62,8 +62,7 @@ public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Comparator<Ca
         this.servicio = servicio;
     }
     public void setFecha(String fecha) {
-        this.date = LocalDate.parse(fecha,
-                DateTimeFormat.forPattern("dd-MM-yyyy"));
+        this.date = DateTimeFormat.forPattern("dd-MM-yyyy").parseDateTime(fecha);
     }
 
     @Override

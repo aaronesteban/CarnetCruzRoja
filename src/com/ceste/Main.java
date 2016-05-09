@@ -75,8 +75,8 @@ public class Main {
     }
 
     public static CarnetCruzRoja[] addCarnet(CarnetCruzRoja carnet[]){
-        boolean opcion = true;
         for(int i=0; i<carnet.length; ++i){
+            boolean opcion = true;
             leer.nextLine();
             System.out.println("\nIntroduce el D.N.I:");
             carnet[i] = new CarnetCruzRoja(leer.nextLine());
@@ -100,8 +100,6 @@ public class Main {
                     continue;
                 }
             }
-
-
         }
         return carnet;
     }
