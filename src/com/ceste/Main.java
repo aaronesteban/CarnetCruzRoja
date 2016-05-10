@@ -3,7 +3,6 @@ package com.ceste;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
 
 public class Main {
@@ -30,12 +29,12 @@ public class Main {
         carnetList.addAll(addCarnet());
         printCarnetFromArrayList(carnetList);
 
-        //CompareTo Apellidos
+        /*//CompareTo Apellidos
         System.out.println("\nImprimo carnets ordenados por apellido");
         Collections.sort(carnetList);
         printCarnetFromArrayList(carnetList);
 
-        /*//Compare Dni
+        //Compare Dni
         System.out.println("\nImprimo carnets ordenados por DNI");
         Collections.sort(carnetList, new OrdenaCarnets("dni"));
         printCarnetFromArrayList(carnetList);
@@ -53,51 +52,56 @@ public class Main {
         }
 
     }
-    
+
     public static ArrayList<CarnetCruzRoja> addCarnet() {
         ArrayList<CarnetCruzRoja> carnet = new ArrayList<>();
         boolean opcion = true;
         char salida;
         int i = 0;
         do {
-            leer.nextLine();
-            System.out.println("\nIntroduce el D.N.I:");
-            carnet.add(new CarnetCruzRoja(leer.nextLine()));
-            System.out.println("\nIntroduce el nombre:");
-            carnet.get(i).setNombre(leer.nextLine());
-            System.out.println("\nIntroduce los apellidos:");
-            carnet.get(i).setApellidos(leer.nextLine());
-            System.out.println("\nIntroduce la provincia:");
-            carnet.get(i).setProvincia(leer.nextLine());
-            System.out.println("\nIntroduce la localidad:");
-            carnet.get(i).setLocalidad(leer.nextLine());
-            System.out.println("\nIntroduce el servicio:");
-            carnet.get(i).setServicio(leer.nextLine());
+            if (i== 0) System.out.println("\nPresione una tecla para introducir el carnet:");
+            leer.nextLine(); //LIMPIO EL BUFFER PARA QUE NO SE SALTE CAMPOS
+            carnet.add(new CarnetCruzRoja(pideDatos("el D.N.I:")));
+            carnet.get(i).setNombre(pideDatos("el nombre:"));
+            carnet.get(i).setApellidos(pideDatos("los apellidos:"));
+            carnet.get(i).setProvincia(pideDatos("la provincia:"));
+            carnet.get(i).setLocalidad(pideDatos("la localidad:"));
+            carnet.get(i).setServicio(pideDatos("el servicio:"));
+
             do {
-                System.out.println("\nIntroduce la fecha (d/m/y):");
                 try {
-                    carnet.get(i).setFecha(leer.nextLine());
+                    carnet.get(i).setFecha(pideDatos("la fecha (d/m/y):"));
                 } catch (IllegalArgumentException e) {
                     System.out.println("Error: No ha introducido la fecha en el formato correcto.");
-
                 }
             } while (carnet.get(i).getFecha() == null);
-            ++i;
+
             do {
-                System.out.println("¿Desea introducir otro carnet? <y/n>");
+                System.out.println("\n¿Desea introducir otro carnet? <y/n>");
                 salida = leer.next().charAt(0);
                 if (salida == 'n') opcion = false;
-                else if (salida != 'n' && salida != 'y') System.out.println("Error: La opción intoducida no es válida");
+                else if (salida != 'n' && salida != 'y') System.out.println("\nError: La opción intoducida no es válida");
             }while (salida != 'n' && salida != 'y');
-        }while (opcion == true);
+
+            ++i;
+        }while (opcion);
         return carnet;
     }
 
     private static void printCarnetFromArrayList(ArrayList<CarnetCruzRoja> carnetList) {
         System.out.println("\n****** Imprimo el ArrayList ******");
-        for (int i=0; i<carnetList.size(); ++i){
-            System.out.println(carnetList.get(i));
+        for (CarnetCruzRoja aCarnetList : carnetList) {
+            System.out.println(aCarnetList);
         }
     }
 
+    private static String pideDatos(String campo){
+        String resultado;
+        do {
+        System.out.println("\nIntroduce " + campo);
+            resultado = leer.nextLine();
+            if (resultado.isEmpty() && !campo.equals("la fecha (d/m/y):")) System.out.println("Error: Debe introducir " + campo);
+        } while (resultado.isEmpty() && !campo.equals("la fecha (d/m/y):"));
+        return resultado;
+    }
 }

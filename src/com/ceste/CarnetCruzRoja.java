@@ -4,10 +4,6 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import java.io.Serializable;
 
-/**
- * Created by Aaron on 25/4/16.
- */
-
 public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Serializable{
     private String dni = "";
     private String apellidos = "";
@@ -66,9 +62,9 @@ public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Serializable{
 
     @Override
     public String toString() {
-        String carnet =nombre + "\t" + apellidos + "\t" + dni + "\t" + provincia + "\t" + localidad + "\t"
+        String carnetToString =nombre + "\t" + apellidos + "\t" + dni + "\t" + provincia + "\t" + localidad + "\t"
                 + servicio + "\t" + date.toString("dd/MM/yyyy");
-        return carnet;
+        return carnetToString;
     }
 
     @Override

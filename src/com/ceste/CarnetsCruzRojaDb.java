@@ -3,9 +3,6 @@ package com.ceste;
 import java.io.*;
 import java.util.ArrayList;
 
-/**
- * Created by Aaron on 9/5/16.
- */
 public class CarnetsCruzRojaDb {
     private ArrayList<CarnetCruzRoja> carnets;
     private String fichero;
