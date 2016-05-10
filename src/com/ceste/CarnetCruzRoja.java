@@ -27,7 +27,7 @@ public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Serializable{
     public String getApellidos() {
         return apellidos;
     }
-    public String getProvincia() {
+    /*public String getProvincia() {
         return provincia;
     }
     public String getLocalidad() {
@@ -35,7 +35,7 @@ public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Serializable{
     }
     public String getServicio() {
         return servicio;
-    }
+    }*/
     public DateTime getFecha() {
         return date;
     }
@@ -62,9 +62,9 @@ public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Serializable{
 
     @Override
     public String toString() {
-        String carnetToString =nombre + "\t" + apellidos + "\t" + dni + "\t" + provincia + "\t" + localidad + "\t"
+        String carnet = nombre + "\t" + apellidos + "\t" + dni + "\t" + provincia + "\t" + localidad + "\t"
                 + servicio + "\t" + date.toString("dd/MM/yyyy");
-        return carnetToString;
+        return carnet;
     }
 
     @Override

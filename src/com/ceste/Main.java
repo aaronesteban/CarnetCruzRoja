@@ -23,7 +23,9 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        printCarnetFromArrayList(carnetList);
+        //printCarnetFromArrayList(carnetList);
+
+        menu();
 
         //Objects to ArrayList
         carnetList.addAll(addCarnet());
@@ -49,6 +51,56 @@ public class Main {
             serialize.guardar();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+    }
+
+    private static void menu() {
+        int select = -1;
+
+        System.out.println("*************************************************************");
+        System.out.println("********** PRÁCTICA FINAL CARNETS BY AARON ESTEBAN **********");
+        System.out.println("*************************************************************");
+
+        //Mientras la opción elegida sea 0, preguntamos al usuario
+        while(select != 0){
+            //Try catch para evitar que el programa termine si hay un error
+            try{
+                System.out.println("\n\n\tElige opción:\n\n" +
+                        "\t1.- Sumar\n" +
+                        "\t2.- Restar\n" +
+                        "\t3.- Multiplicar\n" +
+                        "\t4.- Dividir\n" +
+                        "\t0.- Salir\n");
+                //Recoger una variable por consola
+                select = leer.nextInt();
+
+                //Ejemplo de switch case en Java
+                switch(select){
+                    case 1:
+
+                        break;
+                    case 2:
+
+                        break;
+                    case 3:
+
+                        break;
+                    case 4:
+
+                        break;
+                    case 0:
+                        System.out.println("Adios!");
+                        break;
+                    default:
+                        System.out.println("Número no reconocido");break;
+                }
+
+                System.out.println("\n"); //Mostrar un salto de línea en Java
+
+            }catch(Exception e){
+                System.out.println("Uoop! Error!");
+            }
         }
 
     }
@@ -80,7 +132,7 @@ public class Main {
                 System.out.println("\n¿Desea introducir otro carnet? <y/n>");
                 salida = leer.next().charAt(0);
                 if (salida == 'n') opcion = false;
-                else if (salida != 'n' && salida != 'y') System.out.println("\nError: La opción intoducida no es válida");
+                else if (salida != 'y') System.out.println("\nError: La opción intoducida no es válida");
             }while (salida != 'n' && salida != 'y');
 
             ++i;
@@ -103,5 +155,10 @@ public class Main {
             if (resultado.isEmpty() && !campo.equals("la fecha (d/m/y):")) System.out.println("Error: Debe introducir " + campo);
         } while (resultado.isEmpty() && !campo.equals("la fecha (d/m/y):"));
         return resultado;
+    }
+
+    public static void clearConsole()
+    {
+        for (int i=0; i<80; ++i) System.out.println("\n");
     }
 }
