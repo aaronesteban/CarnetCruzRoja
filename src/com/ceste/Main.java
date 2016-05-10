@@ -60,7 +60,7 @@ public class Main {
                     break;
                 case 2:
                     //Print ArrayList
-                    printCarnets(carnetList);
+                    printCarnets();
                     break;
                 case 3:
                     ordenaCarnets();
@@ -96,7 +96,7 @@ public class Main {
         int i = 0;
         do {
             clearConsole();
-            System.out.println("    ************************ Insercción de Carnets ************************");
+            System.out.println("    ************************ Insertar carnets ************************");
             leer.nextLine(); //LIMPIO EL BUFFER PARA QUE NO SE SALTE CAMPOS
             carnet.add(new CarnetCruzRoja(prompt("el D.N.I:")));
             carnet.get(i).setNombre(prompt("el nombre:"));
@@ -135,11 +135,14 @@ public class Main {
         return resultado;
     }
 
-    private static void printCarnets(ArrayList<CarnetCruzRoja> carnetList) {
+    private static void printCarnets() {
         clearConsole();
-        System.out.println("    ************************** Listado de Carnets *************************\n\n");
-        for (CarnetCruzRoja aCarnetList : carnetList) {
-            System.out.println("\t" + aCarnetList);
+        System.out.println("    ************************** Listar carnets *************************\n\n");
+        if (carnetList.isEmpty()) System.out.println("\tNo hay ningún carnet para mostrar.");
+        else {
+            for (CarnetCruzRoja aCarnetList : carnetList) {
+                System.out.println(" " + aCarnetList);
+            }
         }
         returnMenu();
     }
@@ -148,7 +151,7 @@ public class Main {
         int select = 0;
         do {
             clearConsole();
-            System.out.println("    ************************ Ordenación de Carnets ************************");
+            System.out.println("    ************************ Ordenar carnets ************************");
 
             if (select > 4) System.out.println("\n\n\t--> Error: Opción no válida");
 
@@ -168,22 +171,22 @@ public class Main {
                 case 1:
                     //CompareTo Apellidos
                     Collections.sort(carnetList);
-                    printCarnets(carnetList);
+                    printCarnets();
                     break;
                 case 2:
                     //Compare Dni
                     Collections.sort(carnetList, new OrdenaCarnets("dni"));
-                    printCarnets(carnetList);
+                    printCarnets();
                     break;
                 case 3:
                     //Compare Date
                     Collections.sort(carnetList, new OrdenaCarnets("fecha"));
-                    printCarnets(carnetList);
+                    printCarnets();
                     break;
                 case 4:
                     //Compare Provincia
                     Collections.sort(carnetList, new OrdenaCarnets("provincia"));
-                    printCarnets(carnetList);
+                    printCarnets();
                     break;
                 case 5:
                     break;
@@ -198,6 +201,45 @@ public class Main {
     }
 
     private static void removeCarnets() {
+        String dni;
+        char opcion;
+        CarnetCruzRoja removeCarnet = new CarnetCruzRoja("");
+        clearConsole();
+        System.out.println("    ************************** Eliminar carnets *************************\n\n");
+        leer.nextLine();
+
+        System.out.println("\tInserta el D.N.I del carnet a eliminar\n");
+        dni=leer.nextLine();
+
+        for (CarnetCruzRoja aCarnetList : carnetList) {
+            if (aCarnetList.getDni().equals(dni)) {
+                removeCarnet = aCarnetList;
+                System.out.println("\n\tCarnet encontrado.");
+                System.out.println("\n " + aCarnetList);
+                break;
+            } else {
+                System.out.println("\n\tCarnet no encontrado.");
+                returnMenu();
+            }
+        }
+            if (removeCarnet.getDni().equals(dni)) {
+                do {
+                    System.out.println("\n\t¿Está seguro que desea eliminar este carnet? <y/n>");
+                    opcion = leer.next().charAt(0);
+                    switch (opcion) {
+                        case 'y':
+                            carnetList.remove(removeCarnet);
+                            System.out.println("\n\tEl carnet ha sido eliminado.");
+                            returnMenu();
+                            break;
+                        case 'n':
+                            break;
+                        default:
+                            System.out.println("\n\t--> Error: La opción intoducida no es válida");
+                    }
+                } while (opcion != 'n' && opcion != 'y');
+            }
+
     }
 
     public static void clearConsole()

@@ -8,6 +8,7 @@ public class OrdenaCarnets implements Comparator<CarnetCruzRoja> {
     public OrdenaCarnets(String opcion) {
         this.opcion=opcion;
     }
+
     @Override
     public int compare(CarnetCruzRoja o1, CarnetCruzRoja o2) {
         switch (opcion) {
