@@ -2,129 +2,114 @@ package com.ceste;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
     static Scanner leer = new Scanner(System.in);
     static ArrayList<CarnetCruzRoja> carnetList = new ArrayList<>();
+    static CarnetsCruzRojaDb serialize = new CarnetsCruzRojaDb("datos.ser");
 
     public static void main(String[] args) {
 
         //Deserializacion
-        CarnetsCruzRojaDb serialize = new CarnetsCruzRojaDb("datos.ser");
         serialize.setCarnets(carnetList);
         try {
             carnetList=serialize.cargar();
         } catch (FileNotFoundException e) {
-            System.out.printf("Erro al leer el fichero");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+            System.out.printf("Error al leer el fichero\n");
+        } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
-        //printCarnetFromArrayList(carnetList);
 
         menu();
-
-        //Objects to ArrayList
-        carnetList.addAll(addCarnet());
-        printCarnetFromArrayList(carnetList);
-
-        /*//CompareTo Apellidos
-        System.out.println("\nImprimo carnets ordenados por apellido");
-        Collections.sort(carnetList);
-        printCarnetFromArrayList(carnetList);
-
-        //Compare Dni
-        System.out.println("\nImprimo carnets ordenados por DNI");
-        Collections.sort(carnetList, new OrdenaCarnets("dni"));
-        printCarnetFromArrayList(carnetList);
-
-        //Compare Date
-        System.out.println("\nImprimo carnets ordenados por Fecha");
-        Collections.sort(carnetList, new OrdenaCarnets("fecha"));
-        printCarnetFromArrayList(carnetList);*/
-
-        //Serialización
-        try {
-            serialize.guardar();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
 
     private static void menu() {
-        int select = -1;
+        int select = 0;
 
-        System.out.println("*************************************************************");
-        System.out.println("********** PRÁCTICA FINAL CARNETS BY AARON ESTEBAN **********");
-        System.out.println("*************************************************************");
+        do {
+            clearConsole();
+            System.out.println("    ***********************************************************************");
+            System.out.println("    *************** PRÁCTICA FINAL CARNETS BY AARON ESTEBAN ***************");
+            System.out.println("    ***********************************************************************");
 
-        //Mientras la opción elegida sea 0, preguntamos al usuario
-        while(select != 0){
-            //Try catch para evitar que el programa termine si hay un error
-            try{
-                System.out.println("\n\n\tElige opción:\n\n" +
-                        "\t1.- Sumar\n" +
-                        "\t2.- Restar\n" +
-                        "\t3.- Multiplicar\n" +
-                        "\t4.- Dividir\n" +
-                        "\t0.- Salir\n");
-                //Recoger una variable por consola
+            if (select > 5) System.out.println("\n\n\t--> Error: Opción no válida");
+
+            System.out.println("\n\n\tElige opción:\n\n" +
+                    "\t1.- Añadir carnets\n" +
+                    "\t2.- Listar carnets\n" +
+                    "\t3.- Ordenar carnets\n" +
+                    "\t4.- Dividir\n" +
+                    "\t5.- Eliminar carnets\n" +
+                    "\t0.- Salir\n");
+            try {
                 select = leer.nextInt();
-
-                //Ejemplo de switch case en Java
-                switch(select){
-                    case 1:
-
-                        break;
-                    case 2:
-
-                        break;
-                    case 3:
-
-                        break;
-                    case 4:
-
-                        break;
-                    case 0:
-                        System.out.println("Adios!");
-                        break;
-                    default:
-                        System.out.println("Número no reconocido");break;
-                }
-
-                System.out.println("\n"); //Mostrar un salto de línea en Java
-
-            }catch(Exception e){
-                System.out.println("Uoop! Error!");
+            }catch (InputMismatchException e){
+                System.out.println("\n\t--> Error: No ha introducido un carácter válido.\n");
+                break;
             }
-        }
+            switch(select){
+                case 1:
+                    //Objects to ArrayList
+                    carnetList.addAll(addCarnets());
+                    break;
+                case 2:
+                    //Print ArrayList
+                    printCarnets(carnetList);
+                    break;
+                case 3:
+                    ordenaCarnets();
+                    break;
+                case 4:
+
+                    break;
+                case 5:
+                    //Sort ArrayList
+                    removeCarnets();
+                    break;
+                case 0:
+                    //Serialización
+                    try {
+                        serialize.guardar();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("\nAdios!\n");
+                    break;
+                default:
+                    select = 10;
+                    break;
+            }
+        }while (select != 0);
 
     }
 
-    public static ArrayList<CarnetCruzRoja> addCarnet() {
+    public static ArrayList<CarnetCruzRoja> addCarnets() {
         ArrayList<CarnetCruzRoja> carnet = new ArrayList<>();
         boolean opcion = true;
         char salida;
         int i = 0;
         do {
-            if (i== 0) System.out.println("\nPresione una tecla para introducir el carnet:");
+            clearConsole();
+            System.out.println("    ************************ Insercción de Carnets ************************");
             leer.nextLine(); //LIMPIO EL BUFFER PARA QUE NO SE SALTE CAMPOS
-            carnet.add(new CarnetCruzRoja(pideDatos("el D.N.I:")));
-            carnet.get(i).setNombre(pideDatos("el nombre:"));
-            carnet.get(i).setApellidos(pideDatos("los apellidos:"));
-            carnet.get(i).setProvincia(pideDatos("la provincia:"));
-            carnet.get(i).setLocalidad(pideDatos("la localidad:"));
-            carnet.get(i).setServicio(pideDatos("el servicio:"));
+            carnet.add(new CarnetCruzRoja(prompt("el D.N.I:")));
+            carnet.get(i).setNombre(prompt("el nombre:"));
+            carnet.get(i).setApellidos(prompt("los apellidos:"));
+            carnet.get(i).setProvincia(prompt("la provincia:"));
+            carnet.get(i).setLocalidad(prompt("la localidad:"));
+            carnet.get(i).setServicio(prompt("el servicio:"));
 
             do {
                 try {
-                    carnet.get(i).setFecha(pideDatos("la fecha (d/m/y):"));
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Error: No ha introducido la fecha en el formato correcto.");
+                    carnet.get(i).setFecha(prompt("la fecha (d/m/y):"));
+                } catch (ParseException e) {
+                    System.out.println("--> Error: No ha introducido la fecha en el formato correcto.");
                 }
             } while (carnet.get(i).getFecha() == null);
 
@@ -132,7 +117,7 @@ public class Main {
                 System.out.println("\n¿Desea introducir otro carnet? <y/n>");
                 salida = leer.next().charAt(0);
                 if (salida == 'n') opcion = false;
-                else if (salida != 'y') System.out.println("\nError: La opción intoducida no es válida");
+                else if (salida != 'y') System.out.println("\n--> Error: La opción intoducida no es válida");
             }while (salida != 'n' && salida != 'y');
 
             ++i;
@@ -140,25 +125,89 @@ public class Main {
         return carnet;
     }
 
-    private static void printCarnetFromArrayList(ArrayList<CarnetCruzRoja> carnetList) {
-        System.out.println("\n****** Imprimo el ArrayList ******");
-        for (CarnetCruzRoja aCarnetList : carnetList) {
-            System.out.println(aCarnetList);
-        }
-    }
-
-    private static String pideDatos(String campo){
+    private static String prompt(String campo){
         String resultado;
         do {
-        System.out.println("\nIntroduce " + campo);
+            System.out.println("\nIntroduce " + campo);
             resultado = leer.nextLine();
-            if (resultado.isEmpty() && !campo.equals("la fecha (d/m/y):")) System.out.println("Error: Debe introducir " + campo);
+            if (resultado.isEmpty() && !campo.equals("la fecha (d/m/y):")) System.out.println("--> Error: Debe introducir " + campo);
         } while (resultado.isEmpty() && !campo.equals("la fecha (d/m/y):"));
         return resultado;
     }
 
+    private static void printCarnets(ArrayList<CarnetCruzRoja> carnetList) {
+        clearConsole();
+        System.out.println("    ************************** Listado de Carnets *************************\n\n");
+        for (CarnetCruzRoja aCarnetList : carnetList) {
+            System.out.println("\t" + aCarnetList);
+        }
+        returnMenu();
+    }
+
+    private static void ordenaCarnets() {
+        int select = 0;
+        do {
+            clearConsole();
+            System.out.println("    ************************ Ordenación de Carnets ************************");
+
+            if (select > 4) System.out.println("\n\n\t--> Error: Opción no válida");
+
+            System.out.println("\n\n\tElige opción:\n\n" +
+                    "\t1.- Ordenar carnets por apellido\n" +
+                    "\t2.- Ordenar carnets por D.N.I\n" +
+                    "\t3.- Ordenar carnets por fecha\n" +
+                    "\t4.- Ordenar carnets por provincia\n" +
+                    "\t0.- Salir\n");
+            try {
+                select = leer.nextInt();
+            }catch (InputMismatchException e){
+                System.out.println("\n\t--> Error: No ha introducido un carácter válido.");
+                break;
+            }
+            switch (select){
+                case 1:
+                    //CompareTo Apellidos
+                    Collections.sort(carnetList);
+                    printCarnets(carnetList);
+                    break;
+                case 2:
+                    //Compare Dni
+                    Collections.sort(carnetList, new OrdenaCarnets("dni"));
+                    printCarnets(carnetList);
+                    break;
+                case 3:
+                    //Compare Date
+                    Collections.sort(carnetList, new OrdenaCarnets("fecha"));
+                    printCarnets(carnetList);
+                    break;
+                case 4:
+                    //Compare Provincia
+                    Collections.sort(carnetList, new OrdenaCarnets("provincia"));
+                    printCarnets(carnetList);
+                    break;
+                case 5:
+                    break;
+                case 0:
+
+                    break;
+                default:
+                    select = 10;
+                    break;
+            }
+        } while (select != 0);
+    }
+
+    private static void removeCarnets() {
+    }
+
     public static void clearConsole()
     {
-        for (int i=0; i<80; ++i) System.out.println("\n");
+        System.out.print("\033[H\033[2J");
+    }
+
+    public static void returnMenu(){
+        System.out.println("\n\tPresione una tecla para volver al menú:");
+        leer.nextLine();
+        leer.nextLine();
     }
 }

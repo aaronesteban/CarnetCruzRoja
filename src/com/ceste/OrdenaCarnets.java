@@ -10,8 +10,15 @@ public class OrdenaCarnets implements Comparator<CarnetCruzRoja> {
     }
     @Override
     public int compare(CarnetCruzRoja o1, CarnetCruzRoja o2) {
-        if (opcion.equals("dni")) return o1.getDni().compareTo(o2.getDni());
-        else if (opcion.equals("fecha")) return o1.getFecha().compareTo(o2.getFecha());
+        switch (opcion) {
+            case "dni":
+                return o1.getDni().compareTo(o2.getDni());
+            case "fecha":
+                return o1.getFecha().compareTo(o2.getFecha());
+            case "provincia":
+                return o1.getProvincia().compareTo(o2.getProvincia());
+
+        }
         return 0;
     }
 }

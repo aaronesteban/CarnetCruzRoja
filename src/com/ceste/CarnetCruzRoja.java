@@ -1,8 +1,9 @@
 package com.ceste;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Serializable{
     private String dni = "";
@@ -11,7 +12,8 @@ public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Serializable{
     private String provincia = "";
     private String localidad = "";
     private String servicio = "";
-    private DateTime date;
+    private Date date;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     public CarnetCruzRoja(String dni) {
         this.dni = dni;
@@ -27,16 +29,10 @@ public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Serializable{
     public String getApellidos() {
         return apellidos;
     }
-    /*public String getProvincia() {
+    public String getProvincia() {
         return provincia;
     }
-    public String getLocalidad() {
-        return localidad;
-    }
-    public String getServicio() {
-        return servicio;
-    }*/
-    public DateTime getFecha() {
+    public Date getFecha() {
         return date;
     }
 
@@ -56,15 +52,15 @@ public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Serializable{
     public void setServicio(String servicio) {
         this.servicio = servicio;
     }
-    public void setFecha(String fecha) {
-        this.date = DateTimeFormat.forPattern("dd/MM/yyyy").parseDateTime(fecha);
+    public void setFecha(String fecha) throws ParseException {
+        this.date = dateFormat.parse(fecha);
+
     }
 
     @Override
     public String toString() {
-        String carnet = nombre + "\t" + apellidos + "\t" + dni + "\t" + provincia + "\t" + localidad + "\t"
-                + servicio + "\t" + date.toString("dd/MM/yyyy");
-        return carnet;
+        return nombre + "\t" + apellidos + "\t" + dni + "\t" + provincia + "\t" + localidad + "\t"
+                + servicio + "\t" + dateFormat.format(date);
     }
 
     @Override
