@@ -2,7 +2,6 @@ package com.ceste;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
-
 import java.io.Serializable;
 
 /**
@@ -82,5 +81,4 @@ public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Serializable{
         }
         return 0;
     }
-
 }
