@@ -15,6 +15,10 @@ public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Serializable{
     private Date date;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
+    public CarnetCruzRoja() {
+
+    }
+
     public CarnetCruzRoja(String dni) {
         this.dni = dni;
     }
@@ -37,6 +41,10 @@ public class CarnetCruzRoja implements Comparable<CarnetCruzRoja>, Serializable{
     }
 
     //SETTERS
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }

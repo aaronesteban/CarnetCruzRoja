@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 public class Main {
     static Scanner leer = new Scanner(System.in);
+    static String dni;
     static ArrayList<CarnetCruzRoja> carnetList = new ArrayList<>();
     static CarnetsCruzRojaDb serialize = new CarnetsCruzRojaDb("datos.ser");
 
@@ -44,7 +45,7 @@ public class Main {
                     "\t1.- Añadir carnets\n" +
                     "\t2.- Listar carnets\n" +
                     "\t3.- Ordenar carnets\n" +
-                    "\t4.- Dividir\n" +
+                    "\t4.- Editar carnets\n" +
                     "\t5.- Eliminar carnets\n" +
                     "\t0.- Salir\n");
             try {
@@ -66,7 +67,7 @@ public class Main {
                     ordenaCarnets();
                     break;
                 case 4:
-
+                    editCarnets();
                     break;
                 case 5:
                     //Sort ArrayList
@@ -114,10 +115,10 @@ public class Main {
             } while (carnet.get(i).getFecha() == null);
 
             do {
-                System.out.println("\n¿Desea introducir otro carnet? <y/n>");
+                System.out.println("\n¿Desea introducir otro carnet? <y/n>.");
                 salida = leer.next().charAt(0);
                 if (salida == 'n') opcion = false;
-                else if (salida != 'y') System.out.println("\n--> Error: La opción intoducida no es válida");
+                else if (salida != 'y') System.out.println("\n--> Error: La opción intoducida no es válida.");
             }while (salida != 'n' && salida != 'y');
 
             ++i;
@@ -127,12 +128,36 @@ public class Main {
 
     private static String prompt(String campo){
         String resultado;
-        do {
-            System.out.println("\nIntroduce " + campo);
-            resultado = leer.nextLine();
-            if (resultado.isEmpty() && !campo.equals("la fecha (d/m/y):")) System.out.println("--> Error: Debe introducir " + campo);
-        } while (resultado.isEmpty() && !campo.equals("la fecha (d/m/y):"));
+        boolean dniDuplicado;
+
+        if (campo.equals("el D.N.I:")) {
+            do {
+                System.out.println("\nIntroduce " + campo);
+                resultado = leer.nextLine();
+                dniDuplicado = uniqueDNI(resultado);
+                if (dniDuplicado) System.out.println("--> Error: El D.N.I introducido ya existe.");
+            } while (dniDuplicado);
+        }
+        else {
+            do {
+                System.out.println("\nIntroduce " + campo);
+                resultado = leer.nextLine();
+                if (resultado.isEmpty() && !campo.equals("la fecha (d/m/y):"))
+                    System.out.println("--> Error: Debe introducir " + campo + ".");
+            } while (resultado.isEmpty() && !campo.equals("la fecha (d/m/y):"));
+        }
         return resultado;
+    }
+
+    private static Boolean uniqueDNI(String resultado) {
+        boolean dniDuplicado = false;
+        for (CarnetCruzRoja aCarnetList : carnetList) {
+            if (aCarnetList.getDni().equals(resultado)) {
+                dniDuplicado = true;
+                break;
+            }
+        }
+        return dniDuplicado;
     }
 
     private static void printCarnets() {
@@ -200,20 +225,87 @@ public class Main {
         } while (select != 0);
     }
 
-    private static void removeCarnets() {
-        String dni;
+    private static void editCarnets() {
         char opcion;
-        CarnetCruzRoja removeCarnet = new CarnetCruzRoja("");
+        CarnetCruzRoja editCarnet = new CarnetCruzRoja();
+        clearConsole();
+        System.out.println("    ************************** Editar carnets *************************\n\n");
+        leer.nextLine();
+
+        editCarnet = searchCarnets(editCarnet);
+
+        if (editCarnet.getDni().equals(dni)) {
+            do {
+                System.out.println("\n\t¿Está seguro que desea editar este carnet? <y/n>");
+                opcion = leer.next().charAt(0);
+                switch (opcion) {
+                    case 'y':
+                        leer.nextLine();
+                        editCarnet.setDni(prompt("el D.N.I:"));
+                        editCarnet.setNombre(prompt("el nombre:"));
+                        editCarnet.setApellidos(prompt("los apellidos:"));
+                        editCarnet.setProvincia(prompt("la provincia:"));
+                        editCarnet.setLocalidad(prompt("la localidad:"));
+                        editCarnet.setServicio(prompt("el servicio:"));
+                        do {
+                            try {
+                                editCarnet.setFecha(prompt("la fecha (d/m/y):"));
+                            } catch (ParseException e) {
+                                System.out.println("--> Error: No ha introducido la fecha en el formato correcto.");
+                            }
+                        } while (editCarnet.getFecha() == null);
+                        System.out.println("\n\tEl carnet ha sido editado.\n");
+                        System.out.println(" " + editCarnet);
+                        returnMenu();
+                        break;
+                    case 'n':
+                        break;
+                    default:
+                        System.out.println("\n\t--> Error: La opción intoducida no es válida");
+                }
+            } while (opcion != 'n' && opcion != 'y');
+        }
+    }
+
+    private static void removeCarnets() {
+        char opcion;
+        CarnetCruzRoja removeCarnet = new CarnetCruzRoja();
         clearConsole();
         System.out.println("    ************************** Eliminar carnets *************************\n\n");
         leer.nextLine();
 
-        System.out.println("\tInserta el D.N.I del carnet a eliminar\n");
-        dni=leer.nextLine();
+        removeCarnet = searchCarnets(removeCarnet);
+
+        if (removeCarnet.getDni().equals(dni)) {
+            do {
+                System.out.println("\n\t¿Está seguro que desea eliminar este carnet? <y/n>.");
+                opcion = leer.next().charAt(0);
+                switch (opcion) {
+                    case 'y':
+                        carnetList.remove(removeCarnet);
+                        System.out.println("\n\tEl carnet ha sido eliminado.");
+                        returnMenu();
+                        break;
+                    case 'n':
+                        break;
+                    default:
+                        System.out.println("\n\t--> Error: La opción intoducida no es válida.");
+                }
+            } while (opcion != 'n' && opcion != 'y');
+        }
+    }
+
+    private static CarnetCruzRoja searchCarnets(CarnetCruzRoja Carnet) {
+        dni="";
+        do {
+            System.out.println("\tInserta el D.N.I del carnet a buscar:\n");
+            dni = leer.nextLine();
+            if (dni.isEmpty()) System.out.println("\t--> Error: Debe introducir un D.N.I para realizar la búsqueda.\n");
+        }while (dni.isEmpty());
 
         for (CarnetCruzRoja aCarnetList : carnetList) {
             if (aCarnetList.getDni().equals(dni)) {
-                removeCarnet = aCarnetList;
+                Carnet = aCarnetList;
                 System.out.println("\n\tCarnet encontrado.");
                 System.out.println("\n " + aCarnetList);
                 break;
@@ -222,24 +314,7 @@ public class Main {
                 returnMenu();
             }
         }
-            if (removeCarnet.getDni().equals(dni)) {
-                do {
-                    System.out.println("\n\t¿Está seguro que desea eliminar este carnet? <y/n>");
-                    opcion = leer.next().charAt(0);
-                    switch (opcion) {
-                        case 'y':
-                            carnetList.remove(removeCarnet);
-                            System.out.println("\n\tEl carnet ha sido eliminado.");
-                            returnMenu();
-                            break;
-                        case 'n':
-                            break;
-                        default:
-                            System.out.println("\n\t--> Error: La opción intoducida no es válida");
-                    }
-                } while (opcion != 'n' && opcion != 'y');
-            }
-
+        return Carnet;
     }
 
     public static void clearConsole()
