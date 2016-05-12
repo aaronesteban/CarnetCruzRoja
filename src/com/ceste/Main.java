@@ -9,10 +9,11 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
-    static Scanner leer = new Scanner(System.in);
+    final static Scanner LEER = new Scanner(System.in);
     static String dni;
     static ArrayList<CarnetCruzRoja> carnetList = new ArrayList<>();
-    static CarnetsCruzRojaDb serialize = new CarnetsCruzRojaDb("datos.ser");
+    final static String NOMBRE_FICHERO = "datos.ser";
+    static CarnetsCruzRojaDb serialize = new CarnetsCruzRojaDb(NOMBRE_FICHERO);
 
     public static void main(String[] args) {
 
@@ -47,9 +48,9 @@ public class Main {
                     "\t3.- Ordenar carnets\n" +
                     "\t4.- Editar carnets\n" +
                     "\t5.- Eliminar carnets\n" +
-                    "\t0.- Salir\n");
+                    "\t0.- Guardar y salir\n");
             try {
-                select = leer.nextInt();
+                select = LEER.nextInt();
             }catch (InputMismatchException e){
                 System.out.println("\n\t--> Error: No ha introducido un carácter válido.\n");
                 break;
@@ -98,7 +99,7 @@ public class Main {
         do {
             clearConsole();
             System.out.println("    ************************ Insertar carnets ************************");
-            leer.nextLine(); //LIMPIO EL BUFFER PARA QUE NO SE SALTE CAMPOS
+            LEER.nextLine(); //LIMPIO EL BUFFER PARA QUE NO SE SALTE CAMPOS
             carnet.add(new CarnetCruzRoja(prompt("el D.N.I:")));
             carnet.get(i).setNombre(prompt("el nombre:"));
             carnet.get(i).setApellidos(prompt("los apellidos:"));
@@ -116,7 +117,7 @@ public class Main {
 
             do {
                 System.out.println("\n¿Desea introducir otro carnet? <y/n>.");
-                salida = leer.next().charAt(0);
+                salida = LEER.next().charAt(0);
                 if (salida == 'n') opcion = false;
                 else if (salida != 'y') System.out.println("\n--> Error: La opción intoducida no es válida.");
             }while (salida != 'n' && salida != 'y');
@@ -133,15 +134,16 @@ public class Main {
         if (campo.equals("el D.N.I:")) {
             do {
                 System.out.println("\nIntroduce " + campo);
-                resultado = leer.nextLine();
+                resultado = LEER.nextLine();
+                if (resultado.isEmpty()) System.out.println("--> Error: Debe introducir " + campo + ".");
                 dniDuplicado = uniqueDNI(resultado);
                 if (dniDuplicado) System.out.println("--> Error: El D.N.I introducido ya existe.");
-            } while (dniDuplicado);
+            } while (dniDuplicado || resultado.isEmpty());
         }
         else {
             do {
                 System.out.println("\nIntroduce " + campo);
-                resultado = leer.nextLine();
+                resultado = LEER.nextLine();
                 if (resultado.isEmpty() && !campo.equals("la fecha (d/m/y):"))
                     System.out.println("--> Error: Debe introducir " + campo + ".");
             } while (resultado.isEmpty() && !campo.equals("la fecha (d/m/y):"));
@@ -187,7 +189,7 @@ public class Main {
                     "\t4.- Ordenar carnets por provincia\n" +
                     "\t0.- Salir\n");
             try {
-                select = leer.nextInt();
+                select = LEER.nextInt();
             }catch (InputMismatchException e){
                 System.out.println("\n\t--> Error: No ha introducido un carácter válido.");
                 break;
@@ -230,17 +232,18 @@ public class Main {
         CarnetCruzRoja editCarnet = new CarnetCruzRoja();
         clearConsole();
         System.out.println("    ************************** Editar carnets *************************\n\n");
-        leer.nextLine();
+        LEER.nextLine();
 
         editCarnet = searchCarnets(editCarnet);
 
         if (editCarnet.getDni().equals(dni)) {
             do {
                 System.out.println("\n\t¿Está seguro que desea editar este carnet? <y/n>");
-                opcion = leer.next().charAt(0);
+                opcion = LEER.next().charAt(0);
                 switch (opcion) {
                     case 'y':
-                        leer.nextLine();
+                        LEER.nextLine();
+                        editCarnet.setDni("@@@");
                         editCarnet.setDni(prompt("el D.N.I:"));
                         editCarnet.setNombre(prompt("el nombre:"));
                         editCarnet.setApellidos(prompt("los apellidos:"));
@@ -272,14 +275,14 @@ public class Main {
         CarnetCruzRoja removeCarnet = new CarnetCruzRoja();
         clearConsole();
         System.out.println("    ************************** Eliminar carnets *************************\n\n");
-        leer.nextLine();
+        LEER.nextLine();
 
         removeCarnet = searchCarnets(removeCarnet);
 
         if (removeCarnet.getDni().equals(dni)) {
             do {
                 System.out.println("\n\t¿Está seguro que desea eliminar este carnet? <y/n>.");
-                opcion = leer.next().charAt(0);
+                opcion = LEER.next().charAt(0);
                 switch (opcion) {
                     case 'y':
                         carnetList.remove(removeCarnet);
@@ -299,7 +302,7 @@ public class Main {
         dni="";
         do {
             System.out.println("\tInserta el D.N.I del carnet a buscar:\n");
-            dni = leer.nextLine();
+            dni = LEER.nextLine();
             if (dni.isEmpty()) System.out.println("\t--> Error: Debe introducir un D.N.I para realizar la búsqueda.\n");
         }while (dni.isEmpty());
 
@@ -308,12 +311,12 @@ public class Main {
                 Carnet = aCarnetList;
                 System.out.println("\n\tCarnet encontrado.");
                 System.out.println("\n " + aCarnetList);
-                break;
-            } else {
-                System.out.println("\n\tCarnet no encontrado.");
-                returnMenu();
+                return Carnet;
             }
         }
+        System.out.println("\n\tCarnet no encontrado.");
+        returnMenu();
+
         return Carnet;
     }
 
@@ -324,7 +327,7 @@ public class Main {
 
     public static void returnMenu(){
         System.out.println("\n\tPresione una tecla para volver al menú:");
-        leer.nextLine();
-        leer.nextLine();
+        LEER.nextLine();
+        LEER.nextLine();
     }
 }

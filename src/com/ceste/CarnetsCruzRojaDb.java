@@ -7,7 +7,7 @@ public class CarnetsCruzRojaDb {
     private ArrayList<CarnetCruzRoja> carnets;
     private String fichero;
 
-    CarnetsCruzRojaDb(String fichero) {
+    public CarnetsCruzRojaDb(String fichero) {
         this.fichero=fichero;
     }
 
