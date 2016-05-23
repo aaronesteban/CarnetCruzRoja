@@ -157,10 +157,10 @@ public class Main {
         return resultado;
     }
 
-    private static Boolean uniqueDNI(String resultado) {
+    private static Boolean uniqueDNI(String dniLeido) {
         boolean dniDuplicado = false;
         for (CarnetCruzRoja aCarnetList : carnetList) {
-            if (aCarnetList.getDni().equals(resultado)) {
+            if (aCarnetList.getDni().equals(dniLeido)) {
                 dniDuplicado = true;
                 break;
             }
