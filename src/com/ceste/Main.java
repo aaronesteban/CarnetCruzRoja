@@ -13,6 +13,12 @@ public class Main {
     static String dni;
     static ArrayList<CarnetCruzRoja> carnetList = new ArrayList<>();
     final static String NOMBRE_FICHERO = "datos.ser";
+    final static String DNI = "el D.N.I:";
+    final static String NOMBRE = "el nombre:";
+    final static String APELLIDOS = "los apellidos:";
+    final static String PROVINCIA = "la provincia:";
+    final static String LOCALIDAD = "la localidad:";
+    final static String SERVICIO = "el servicio:";
     static CarnetsCruzRojaDb serialize = new CarnetsCruzRojaDb(NOMBRE_FICHERO);
 
     public static void main(String[] args) {
@@ -100,12 +106,12 @@ public class Main {
             clearConsole();
             System.out.println("    ************************ Insertar carnets ************************");
             LEER.nextLine(); //LIMPIO EL BUFFER PARA QUE NO SE SALTE CAMPOS
-            carnet.add(new CarnetCruzRoja(prompt("el D.N.I:")));
-            carnet.get(i).setNombre(prompt("el nombre:"));
-            carnet.get(i).setApellidos(prompt("los apellidos:"));
-            carnet.get(i).setProvincia(prompt("la provincia:"));
-            carnet.get(i).setLocalidad(prompt("la localidad:"));
-            carnet.get(i).setServicio(prompt("el servicio:"));
+            carnet.add(new CarnetCruzRoja(prompt(DNI)));
+            carnet.get(i).setNombre(prompt(NOMBRE));
+            carnet.get(i).setApellidos(prompt(APELLIDOS));
+            carnet.get(i).setProvincia(prompt(PROVINCIA));
+            carnet.get(i).setLocalidad(prompt(LOCALIDAD));
+            carnet.get(i).setServicio(prompt(SERVICIO));
 
             do {
                 try {
@@ -131,7 +137,7 @@ public class Main {
         String resultado;
         boolean dniDuplicado;
 
-        if (campo.equals("el D.N.I:")) {
+        if (campo.equals(DNI)) {
             do {
                 System.out.println("\nIntroduce " + campo);
                 resultado = LEER.nextLine();
